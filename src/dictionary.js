@@ -1,34 +1,37 @@
-const { graphql } = require('graphql');
+const { graphql, buildSchema } = require('graphql');
 const reduce = require('lodash/fp/reduce');
 const forEach = require('lodash/fp/forEach');
 const get = require('lodash/fp/get');
 const set = require('lodash/set');
 
-module.exports = (schema) =>
-	graphql(schema, query)
+// for testing to use same graphql lib version and not cause errors
+module.exports.buildSchema = buildSchema;
+
+module.exports.generate = function(schema) {
+	return graphql(schema, query)
 		.then(get('data.__schema.types'))
 		.then(reduce(typeReducer, {}));
+};
 
-const typeReducer = (
-	result,
-	{
-		name,
-		kind,
-		enumValues,
-		fields,
-	}) => {
+function typeReducer(result, {
+	name,
+	kind,
+	enumValues,
+	fields,
+}) {
 	if (!name.match('__') && (kind === 'OBJECT' || kind === 'LIST')) {
 		result[name] = {
 			encode: {},
 			decode: []
-		}
+		};
 
 		forEach(field => {
 			addField(field, result[name], [field.name]);
-			if (field.args.length > 0)
+			if (field.args.length > 0) {
 				forEach(arg =>
 						addField(arg, result[name], [field.name, 'arguments', arg.name]),
 					field.args)
+			}
 		}, fields)
 	}
 

@@ -1,14 +1,14 @@
 const { assert } = require('chai');
-const { buildSchema, parse, print } = require('graphql');
+const { parse, print } = require('graphql');
 const compress = require('graphql-query-compress');
 
 const { encode, decode } = require('./index');
-const generate = require('src/dictionary');
+const dictionary = require('src/dictionary');
 
 describe('tests', () => {
 	it('can encode & decode query', async () => {
 
-		const schema = buildSchema(`
+		const schemaObject = dictionary.buildSchema(`
   input YellosArgs {
     test: String
   }
@@ -41,9 +41,9 @@ describe('tests', () => {
 			noLocation: true
 		});
 
-		const parsedScheme = await generate(schema);
-		const encoded = encode(parsedQuery, parsedScheme);
-		const decoded = decode(encoded, parsedScheme);
+		const schemaDictionary = await dictionary.generate(schemaObject);
+		const encoded = encode(parsedQuery, schemaDictionary);
+		const decoded = decode(encoded, schemaDictionary);
 
 		const valuesToCompare = [
 			decoded[0],
