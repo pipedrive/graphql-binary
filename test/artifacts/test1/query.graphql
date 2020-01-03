@@ -1,0 +1,12 @@
+{
+    hello { id }
+    hellos {
+        id
+        name {
+            text
+            url
+        }
+    }
+    yello(arg1: 1 arg2: "testasd")
+    yellos
+}

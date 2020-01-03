@@ -1,0 +1,17 @@
+input YellosArgs {
+    test: String
+}
+type Name {
+    text: String
+    url: String
+}
+type Entity {
+    id: Int
+    name: Name
+}
+type Query {
+    hello: Entity,
+    yello(arg1: Int arg2: String): String
+    hellos: [Entity]
+    yellos(arg2: YellosArgs arg3: String): [String]
+}
