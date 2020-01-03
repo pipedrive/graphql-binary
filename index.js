@@ -1,7 +1,7 @@
 const forEach = require('lodash/forEach');
 const isEmpty = require('lodash/isEmpty');
-const { decodeValue, encodeValue } = require('./valueHandlers');
-const ast = require('./ast');
+const { decodeValue, encodeValue } = require('src/valueHandlers');
+const ast = require('src/ast');
 
 const END = 255;
 

@@ -7,7 +7,7 @@ const set = require('lodash/set');
 module.exports = (schema) =>
 	graphql(schema, query)
 		.then(get('data.__schema.types'))
-		.then(reduce(typeReducer, {}))
+		.then(reduce(typeReducer, {}));
 
 const typeReducer = (
 	result,
