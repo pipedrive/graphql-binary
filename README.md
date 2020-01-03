@@ -5,12 +5,6 @@ Msgpack is currently in use for argument values packing\unpacking
 # Stage
 This project is currently in proof on concept stage. Only raw queries with inline arguments are currently supported. See test.js for further information
 
-# Usage ⚗️
-Clone repository and execute
-```shell
-yarn && yarn dev
-```
-
 # Support
 All contributions are warmly welcome. This is a list of things we need right now
 - Test coverage compatible to graphql-js
