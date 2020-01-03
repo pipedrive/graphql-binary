@@ -24,7 +24,7 @@ const typeReducer = (
 		}
 
 		forEach(field => {
-			addField(field, result[name], [field.name])
+			addField(field, result[name], [field.name]);
 			if (field.args.length > 0)
 				forEach(arg =>
 						addField(arg, result[name], [field.name, 'arguments', arg.name]),
@@ -33,7 +33,7 @@ const typeReducer = (
 	}
 
 	return result
-}
+};
 
 const addField = (
 	{ type, ...field },
@@ -47,10 +47,10 @@ const addField = (
 		...type.kind === 'LIST' || type.kind === 'NON_NULL'
 			? { kind: type.ofType.kind, type: type.ofType.name }
 			: { kind: type.kind, type: type.name }
-	}
-	destination.decode.push(definition)
-	set(destination, ['encode', ...path], definition)
-}
+	};
+	destination.decode.push(definition);
+	set(destination, ['encode', ...path], definition);
+};
 
 const query = `{
   __schema {
@@ -84,4 +84,4 @@ const query = `{
       }
     }
   }
-}`
+}`;

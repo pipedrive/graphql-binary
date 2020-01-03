@@ -42,7 +42,7 @@ const availableTypes = {
 	Float: {
 		astName: 'FloatValue',
 		check: n => Number(n) === n && n % 1 !== 0,
-		parse: value => parseFloat(value, 10)
+		parse: value => parseFloat(value)
 	},
 	String: {
 		astName: 'StringValue',
