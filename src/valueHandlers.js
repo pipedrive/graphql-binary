@@ -15,7 +15,7 @@ const decodeValue = (bytes, index, type) => {
 	if (type !== 'Boolean' && type !== 'String')  // FIXME For some reason vanilla parser stringifies integers and doesn't Booleans
 		value = JSON.stringify(value);
 	return [value, end + 1, availableTypes[type].astName]
-}
+};
 
 const encodeValue = (type, value, result) => {
 	const availableType = availableTypes[type];
@@ -31,7 +31,7 @@ const encodeValue = (type, value, result) => {
 	const encodedValue = msgPack.encode(value);
 	result.push(encodedValue.length);
 	encodedValue.forEach(value => result.push(value)) // FIXME find a way not to use extra byte
-}
+};
 
 const availableTypes = {
 	Int: {
@@ -76,7 +76,7 @@ const availableTypes = {
 		astName: 'ObjectField',
 		check: () => true
 	}, // Not neccesary?
-}
+};
 
 const types = {
 	Int: {
@@ -90,7 +90,7 @@ const types = {
 			result.push(encodedValue)
 		}
 	}
-}
+};
 
 module.exports.decodeValue = decodeValue;
 module.exports.encodeValue = encodeValue;

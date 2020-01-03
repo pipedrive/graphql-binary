@@ -6,7 +6,7 @@ const SCALAR = name => ({
   directives: [],
   selectionSet: undefined,
   loc: undefined
-})
+});
 
 const OBJECT = name => ({
   ...SCALAR(name),
@@ -15,7 +15,7 @@ const OBJECT = name => ({
     selections: [],
     loc: undefined
   }
-})
+});
 
 const ARGUMENT = (name, kind, value) => ({
   kind: 'Argument',
@@ -26,7 +26,7 @@ const ARGUMENT = (name, kind, value) => ({
     ...kind === 'StringValue' && { block: false }
   },
   loc: undefined
-})
+});
 
 module.exports.SCALAR = SCALAR;
 module.exports.OBJECT = OBJECT;

@@ -9,7 +9,26 @@ module.exports.encode = (definition, dictionary) => {
 	const result = [];
 	encodeFields(definition.definitions[0], dictionary, 'Query', result);
 	return new Uint8Array(result)
-}
+};
+
+// Recursive
+function decode(
+	bytes,
+	dictionary,
+	parentKey = 'Query',
+	accumulator = [],
+	index = 0
+) {
+	if (bytes[index] === END) // FIXME doing this twice is wrong
+		return [accumulator, index + 1];
+	const [field, offset] = decodeField(bytes, dictionary, parentKey, index);
+	accumulator.push(field);
+
+	return decode(bytes, dictionary, parentKey, accumulator, offset);
+};
+
+module.exports.decode = decode;
+
 
 function encodeFields(definition, dictionary, parentKey, result) {
 	forEach(definition.selectionSet.selections, field =>
@@ -43,20 +62,6 @@ function encodeField(field, dictionary, parentKey, result) {
 		encodeFields(field, dictionary, definition.type, result)
 }
 
-const decode = (
-	bytes,
-	dictionary,
-	parentKey = 'Query',
-	accumulator = [],
-	index = 0
-) => {
-	if (bytes[index] === END) // FIXME doing this twice is wrong
-		return [accumulator, index + 1];
-	const [field, offset] = decodeField(bytes, dictionary, parentKey, index);
-	accumulator.push(field);
-
-	return decode(bytes, dictionary, parentKey, accumulator, offset);
-}
 
 const decodeField = (
 	bytes,
@@ -71,7 +76,7 @@ const decodeField = (
 
 	const result = ast[definition.kind](definition.name);
 
-	index += 1
+	index += 1;
 
 	function subFields() { // FIXME this is a bad implementation
 		const next = dictionary[parentKey].decode[bytes[index]];
@@ -84,11 +89,8 @@ const decodeField = (
 			const [fields, offset] = decode(bytes, dictionary, definition.type, result.selectionSet.selections, index);
 			index = offset
 		}
-		return;
 	}
 
 	subFields();
 	return [result, index];
 };
-
-module.exports.decode = decode;

@@ -52,6 +52,9 @@ describe('tests', () => {
 
 		assert.notStrictEqual(valuesToCompare[0], valuesToCompare[1]);
 
-		console.log(`Generated AST is valid. Query was ${(compress(print(parsedQuery)).length / encoded.length).toPrecision(3)} smaller in size`);
+		const compressionRate = (compress(print(parsedQuery)).length / encoded.length).toPrecision(3);
+
+		//Generated AST is valid. Query was x smaller in size
+		assert(compressionRate > 2.6);
 	});
 });
