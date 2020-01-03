@@ -10,11 +10,11 @@ const decodeValue = (bytes, index, type) => {
 
 	const length = bytes[index];
 	index += 1;
-	const end = index + length
+	const end = index + length;
 	let value = msgPack.decode(slice(bytes, index, end));
 	if (type !== 'Boolean' && type !== 'String')  // FIXME For some reason vanilla parser stringifies integers and doesn't Booleans
 		value = JSON.stringify(value);
-	return [value, end + 1, availableTypes[type].astName]
+	return [value, end + 1, availableTypes[type].astName];
 };
 
 const encodeValue = (type, value, result) => {
@@ -78,19 +78,19 @@ const availableTypes = {
 	}, // Not neccesary?
 };
 
-const types = {
-	Int: {
-		decode: (bytes, index) => {
-			const value = bytes[index];
-			const offset = index + 1;
-			return [value, offset]
-		},
-		encode: (value, result) => {
-			const encodedValue = parseInt(value, 10);
-			result.push(encodedValue)
-		}
-	}
-};
+// const types = {
+// 	Int: {
+// 		decode: (bytes, index) => {
+// 			const value = bytes[index];
+// 			const offset = index + 1;
+// 			return [value, offset]
+// 		},
+// 		encode: (value, result) => {
+// 			const encodedValue = parseInt(value, 10);
+// 			result.push(encodedValue)
+// 		}
+// 	}
+// };
 
 module.exports.decodeValue = decodeValue;
 module.exports.encodeValue = encodeValue;
