@@ -1,7 +1,7 @@
 {
   "type": "module",
   "scripts": {
-    "dev": "nodemon --experimental-modules --es-module-specifier-resolution=node test.js"
+    "dev": "nodemon test.js"
   },
   "dependencies": {
     "@msgpack/msgpack": "1.9.3",
@@ -16,8 +16,8 @@
   "version": "0.1.0",
   "description": "GraphQL binary protocol for smaller network traffic and parsing performance",
   "main": "index.js",
-  "repository": "https://github.com/esseswann/graphql-binary",
-  "author": "jsus <esseswann@gmail.com>",
+  "repository": "https://github.com/pipedrive/graphql-binary",
+  "author": "Artjom Kurapov <artkurapov@gmail.com>, jsus <esseswann@gmail.com>",
   "license": "MIT",
   "private": false
 }

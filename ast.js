@@ -1,4 +1,4 @@
-export const SCALAR = name => ({
+const SCALAR = name => ({
   kind: 'Field',
   alias: undefined,
   name: { kind: 'Name', value: name, loc: undefined },
@@ -8,7 +8,7 @@ export const SCALAR = name => ({
   loc: undefined
 })
 
-export const OBJECT = name => ({
+const OBJECT = name => ({
   ...SCALAR(name),
   selectionSet: {
     kind: 'SelectionSet',
@@ -17,7 +17,7 @@ export const OBJECT = name => ({
   }
 })
 
-export const ARGUMENT = (name, kind, value) => ({
+const ARGUMENT = (name, kind, value) => ({
   kind: 'Argument',
   name: { kind: 'Name', value: name, loc: undefined },
   value: {
@@ -27,3 +27,7 @@ export const ARGUMENT = (name, kind, value) => ({
   },
   loc: undefined
 })
+
+module.exports.SCALAR = SCALAR;
+module.exports.OBJECT = OBJECT;
+module.exports.ARGUMENT = ARGUMENT;

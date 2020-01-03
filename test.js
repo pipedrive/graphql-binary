@@ -1,8 +1,8 @@
-import { buildSchema, parse, print } from 'graphql'
-import generate from './dictionary'
-import compress from 'graphql-query-compress' // Send it to test suite
-import { encode, decode } from './index'
-import isEqual from 'lodash/isEqual'
+const { buildSchema, parse, print } = require('graphql');
+const generate = require('./dictionary');
+const compress = require('graphql-query-compress');
+const { encode, decode } = require('./index');
+const isEqual = require('lodash/isEqual');
 
 const schema = buildSchema(`
   input YellosArgs {
@@ -34,22 +34,22 @@ const query = `
 
 
 const parsedQuery = parse(query, {
-  noLocation: true
+	noLocation: true
 })
-const schemaQueryFields = schema.getQueryType().getFields()
+// const schemaQueryFields = schema.getQueryType().getFields()
 
 generate(schema)
-  .then(parsedScheme => {
-    const encoded = encode(parsedQuery, parsedScheme)
-    const decoded = decode(encoded, parsedScheme)
+	.then(parsedScheme => {
+		const encoded = encode(parsedQuery, parsedScheme)
+		const decoded = decode(encoded, parsedScheme)
 
-    const valuesToCompare = [
-      decoded[0],
-      parsedQuery.definitions[0].selectionSet.selections
-    ]
-    const test = isEqual(valuesToCompare[0], valuesToCompare[1])
-    console.log(
-      test
-        ? `Generated AST is valid. Query was ${(compress(print(parsedQuery)).length / encoded.length).toPrecision(3)} smaller in size`
-        : 'Generated AST is invalid')
-  })
+		const valuesToCompare = [
+			decoded[0],
+			parsedQuery.definitions[0].selectionSet.selections
+		]
+		const test = isEqual(valuesToCompare[0], valuesToCompare[1])
+		console.log(
+			test
+				? `Generated AST is valid. Query was ${(compress(print(parsedQuery)).length / encoded.length).toPrecision(3)} smaller in size`
+				: 'Generated AST is invalid')
+	})
