@@ -5,10 +5,9 @@ const compress = require('graphql-query-compress');
 const { encode, decode } = require('./index');
 const dictionary = require('src/dictionary');
 
-describe('tests', () => {
-	it('can encode & decode query', async () => {
+it('can encode & decode query', async () => {
 
-		const schemaObject = dictionary.buildSchema(`
+	const schemaObject = dictionary.buildSchema(`
   input YellosArgs {
     test: String
   }
@@ -28,7 +27,7 @@ describe('tests', () => {
   }
 `);
 
-		const query = `
+	const query = `
 {
   hello { id }
   hellos { id name { text url } }
@@ -37,24 +36,18 @@ describe('tests', () => {
 }`;
 
 
-		const parsedQuery = parse(query, {
-			noLocation: true
-		});
-
-		const schemaDictionary = await dictionary.generate(schemaObject);
-		const encoded = encode(parsedQuery, schemaDictionary);
-		const decoded = decode(encoded, schemaDictionary);
-
-		const valuesToCompare = [
-			decoded[0],
-			parsedQuery.definitions[0].selectionSet.selections
-		];
-
-		assert.notStrictEqual(valuesToCompare[0], valuesToCompare[1]);
-
-		const compressionRate = (compress(print(parsedQuery)).length / encoded.length).toPrecision(3);
-
-		//Generated AST is valid. Query was x smaller in size
-		assert(compressionRate > 2.6);
+	const parsedQuery = parse(query, {
+		noLocation: true
 	});
+
+	const schemaDictionary = await dictionary.generate(schemaObject);
+	const encoded = encode(parsedQuery, schemaDictionary);
+	const decoded = decode(encoded, schemaDictionary);
+
+	assert.notStrictEqual(decoded[0], parsedQuery.definitions[0].selectionSet.selections);
+
+	const compressionRate = (compress(print(parsedQuery)).length / encoded.length).toPrecision(3);
+
+	//Generated AST is valid. Query was x smaller in size
+	assert(compressionRate > 2.6);
 });
