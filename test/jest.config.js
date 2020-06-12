@@ -1,4 +1,4 @@
-module.exports = {
+export default {
 	rootDir: '..',
 	resetModules: true,
 	resetMocks: true,
@@ -7,4 +7,4 @@ module.exports = {
 	collectCoverageFrom: ['<rootDir>/src/**/*.js', '<rootDir>/**/*.js'],
 	testMatch: ['<rootDir>/src/**/*.test.js', '<rootDir>/**/*.test.js'],
 	modulePaths: ['<rootDir>']
-};
+}
